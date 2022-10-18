@@ -9,6 +9,7 @@ void setup()
   delay(10000);
   wifiinit();
   tcpclientinit();
+
 }
 void loop()
 {
@@ -20,9 +21,11 @@ void wifiinit()
   WiFi.mode(WIFI_STA);
   WiFi.begin(wc.SSID, wc.WifiPassword);
 
+  Serial.print("\nConnecting to network");
+
   while (WiFi.status() != WL_CONNECTED)
   {
-    Serial.print("\nConnecting to network");
+    Serial.print(".");
     delay(100);
   }
   
@@ -40,13 +43,14 @@ void tcpclientinit()
 
   WiFiClient tcpclient;
 
-
-  while (!tcpclient.connect(tcpcliconf.host, tcpcliconf.port))
+  Serial.println("\nAttempting to connect to TCPServer.");
+  while (!tcpclient.connected())
   {
-    Serial.println("\nConnection has failed.");
-    Serial.println("Retrying in 10 seconds");
-    delay(10000);
-    tcpclientinit();
+    
+    tcpclient.connect(tcpcliconf.host, tcpcliconf.port);
+    
+    
+    
   }
 
 Serial.print("\nConnected to TCPServer");
