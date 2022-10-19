@@ -11,20 +11,21 @@ void wifiinit()
 
   Serial.print("\nConnecting to specified network");
 
-  if (WiFi.status() != WL_CONNECTED)
+  while (WiFi.status() != WL_CONNECTED)
   {
-    Serial.print("\nFailed to connect to specified network");
-    while(true);
+    Serial.print(".");
+    delay(1000);
+    
   }
-  else
-  {
+  
+  
     Serial.print("\nConnected to network");
     Serial.print("\nConnection details:");
     Serial.print("\nSSID:");
     Serial.println(WiFi.SSID());
     Serial.print("\nDevice IP Address:");
     Serial.println(WiFi.localIP());
-  }
+  
 }
 
 void tcpclientinit()
@@ -36,15 +37,15 @@ void tcpclientinit()
   tcpclient.connect(tcpcliconf.host, tcpcliconf.port);
 
   Serial.println("\nAttempting to connect to specified NET-RMSI server.");
-  if (!tcpclient.connected())
+  while (!tcpclient.connected())
   {
-    Serial.print("\nFailed to connect to specified NET-RMSI server");
-    while(true);
+
+    tcpclient.connect(tcpcliconf.host, tcpcliconf.port);
+    Serial.print("\nRetrying in 5 seconds");
+    delay(5000);
+
   }
-  else
-  {
     Serial.print("\nConnected to TCPServer");
-  }
 }
 
 void setup()
