@@ -4,8 +4,9 @@
 #include "WiFiMulti.h"
 #include "string.h"
 
-  TCPClientConfig tcpcliconf;
-  WifiConfig wc;
+TCPClientConfig tcpcliconf;
+WifiConfig wc;
+
 void wifiinit()
 {
   
@@ -62,6 +63,7 @@ void serverclientidentif(WiFiClient tcpclient)
     if (recvidentif == "Current")
     {
       Serial.print("\nClient-Server versioning the same");
+      loop(tcpclient);
     }
     else
     {
@@ -71,12 +73,14 @@ void serverclientidentif(WiFiClient tcpclient)
       tcpclient.stop();
 
       tcpclientinit();
+
     }
 }
 
 
 void setup()
 {
+  
   Serial.begin(115200);
   delay(10000);
   wifiinit();
@@ -84,9 +88,31 @@ void setup()
 
 }
 
-void loop()
+void loop(WiFiClient tcpclient)
 {
 
+  if (tcpclient.connected())
+  {
+
+    int recv = tcpclient.read();
+    if (recv == 0)
+    {
+      /* Relay control code here */
+    }
+    else if (recv == 1)
+    {
+      /* Relay control code here */
+    }
+
+    Serial.println("\nInvalid response from server recieved: " + recv);
+    tcpclient.print("null");
+
+  }
+  else if (!tcpclient.connected())
+  {
+    tcpclient.stop();
+    tcpclientinit();
+
+  }
+  
 }
-
-
