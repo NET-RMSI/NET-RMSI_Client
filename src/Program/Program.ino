@@ -2,6 +2,7 @@
 #include "WifiConfig.h"
 #include "TCPClientConfig.h"
 #include "WiFiMulti.h"
+#include "string.h"
 
 void wifiinit()
 {
@@ -17,7 +18,6 @@ void wifiinit()
     delay(1000);
     
   }
-  
   
     Serial.print("\nConnected to network");
     Serial.print("\nConnection details:");
@@ -46,20 +46,32 @@ void tcpclientinit()
 
   }
     Serial.print("\nConnected to TCPServer");
+    serverclientidentif(tcpclient);
 
-    tcpclient.println(tcpcliconf.controlledcli);
-    char recvidentif = tcpclient.read();
+    
+}
+
+void serverclientidentif(WiFiClient tcpclient)
+{
+  TCPClientConfig tcpcliconf;
+
+  tcpclient.println(tcpcliconf.controlledcli);
+
+    String recvidentif = tcpclient.readString();
 
     if (tcpcliconf.controlledcli == recvidentif)
     {
-      
+      Serial.print("Client, server versioning the same");
     }
     else
     {
       Serial.print("Disconnecting");
       tcpclient.stop();
+
+      tcpclientinit();
     }
 }
+
 
 void setup()
 {
@@ -69,7 +81,10 @@ void setup()
   tcpclientinit();
 
 }
+
 void loop()
 {
 
 }
+
+
