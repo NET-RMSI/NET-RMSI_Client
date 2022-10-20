@@ -46,6 +46,19 @@ void tcpclientinit()
 
   }
     Serial.print("\nConnected to TCPServer");
+
+    tcpclient.println(tcpcliconf.controlledcli);
+    char recvidentif = tcpclient.read();
+
+    if (tcpcliconf.controlledcli == recvidentif)
+    {
+      
+    }
+    else
+    {
+      Serial.print("Disconnecting");
+      tcpclient.stop();
+    }
 }
 
 void setup()

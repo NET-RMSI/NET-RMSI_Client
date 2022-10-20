@@ -4,6 +4,6 @@ class TCPClientConfig
       const int32_t port = 13062;
       const char *host = "192.168.0.40";
 
-      const char *controlledcli = "CD100";
+      const char controlledcli = "CD100";
       
 };
