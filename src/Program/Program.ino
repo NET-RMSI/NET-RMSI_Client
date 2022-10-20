@@ -4,9 +4,11 @@
 #include "WiFiMulti.h"
 #include "string.h"
 
+  TCPClientConfig tcpcliconf;
+  WifiConfig wc;
 void wifiinit()
 {
-  WifiConfig wc;
+  
   WiFi.mode(WIFI_STA);
   WiFi.begin(wc.SSID, wc.WifiPassword);
 
@@ -30,7 +32,6 @@ void wifiinit()
 
 void tcpclientinit()
 {
-  TCPClientConfig tcpcliconf;
 
   WiFiClient tcpclient;
 
@@ -53,19 +54,20 @@ void tcpclientinit()
 
 void serverclientidentif(WiFiClient tcpclient)
 {
-  TCPClientConfig tcpcliconf;
 
   tcpclient.println(tcpcliconf.controlledcli);
 
     String recvidentif = tcpclient.readString();
 
-    if (tcpcliconf.controlledcli == recvidentif)
+    if (recvidentif == "Current")
     {
-      Serial.print("Client, server versioning the same");
+      Serial.print("\nClient-Server versioning the same");
     }
     else
     {
-      Serial.print("Disconnecting");
+      Serial.print("\nDisconnecting from server");
+      Serial.println("\nClient version: " + tcpcliconf.controlledcli);
+      Serial.print("Outdated client version please update, ensure server and client are on the same major version");
       tcpclient.stop();
 
       tcpclientinit();
