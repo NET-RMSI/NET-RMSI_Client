@@ -1,6 +1,6 @@
 # NET-RMSI_Client
  
-NET-RMSI_Client is the serverside application for the NET-RMSI project.
+NET-RMSI_Client is the clientside controlled application for the NET-RMSI project.
 
 Built to run on microcontrollers with limited flash storage such as the Espressif ESP32, the main purpose of this program is to provide a controller client for a NET-RMSI_Server allowing remote control of a connected server or computer without physical access.
 
