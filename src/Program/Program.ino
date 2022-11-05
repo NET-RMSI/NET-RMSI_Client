@@ -7,6 +7,8 @@
 TCPClientConfig tcpcliconf;
 WifiConfig wc;
 
+WiFiClient tcpclient;
+
 void wifiinit()
 {
   
@@ -34,8 +36,6 @@ void wifiinit()
 void tcpclientinit()
 {
 
-  WiFiClient tcpclient;
-
   tcpclient.connect(tcpcliconf.host, tcpcliconf.port);
 
   Serial.println("\nAttempting to connect to specified NET-RMSI server.");
@@ -60,16 +60,16 @@ void serverclientidentif(WiFiClient tcpclient)
 
     String recvidentif = tcpclient.readString();
 
-    if (recvidentif == "Current")
+    if (recvidentif == "valid")
     {
       Serial.print("\nClient-Server versioning the same");
-      loop(tcpclient);
+      
     }
-    else
+    else if (recvidentif == "invalid")
     {
       Serial.print("\nDisconnecting from server");
-      Serial.println("\nClient version: " + tcpcliconf.controlledcli);
-      Serial.print("Outdated client version please update, ensure server and client are on the same major version");
+      Serial.println("\nCurrent controller version: " + tcpcliconf.controlledcli);
+      Serial.print("client-server versioning mismatch please update, ensure server and client are on the same version");
       tcpclient.stop();
 
       tcpclientinit();
@@ -88,7 +88,7 @@ void setup()
 
 }
 
-void loop(WiFiClient tcpclient)
+void loop()
 {
 
   if (tcpclient.connected())
