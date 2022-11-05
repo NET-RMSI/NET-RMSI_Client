@@ -48,12 +48,12 @@ void tcpclientinit()
 
   }
     Serial.print("\nConnected to TCPServer");
-    serverclientidentif(tcpclient);
+    serverclientidentif();
 
     
 }
 
-void serverclientidentif(WiFiClient tcpclient)
+void serverclientidentif()
 {
 
   tcpclient.println(tcpcliconf.controlledcli);
