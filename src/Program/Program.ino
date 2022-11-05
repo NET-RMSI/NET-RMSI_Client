@@ -38,7 +38,7 @@ void tcpclientinit()
 
   tcpclient.connect(tcpcliconf.host, tcpcliconf.port);
 
-  Serial.println("\nAttempting to connect to specified NET-RMSI server.");
+  Serial.println("\nAttempting to connect to specified NET-RMSI server at: " + String(tcpcliconf.host));
   while (!tcpclient.connected())
   {
 
