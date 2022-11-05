@@ -63,7 +63,7 @@ void serverclientidentif()
     if (recvidentif == "valid")
     {
       Serial.print("\nClient-Server versioning the same");
-      
+      loop();
     }
     else if (recvidentif == "invalid")
     {
