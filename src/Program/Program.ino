@@ -79,11 +79,7 @@ void setup()
 
 void loop()
 {
-  int recv = NULL;
-  while (recv == NULL)
-  {
-    recv = tcpclient.read();
-  }
+  int recv = tcpclient.read();
 
   if (recv == 0)
   {
@@ -93,15 +89,5 @@ void loop()
   {
     /* Relay control code here */
   }
-
-  else
-  {
-    Serial.println("\nInvalid response from server recieved: " + recv);
-    Serial.print("\nDisconnecting from server");
-    tcpclient.stop();
-    resetFunc();
-  }
-
-
 
 }
