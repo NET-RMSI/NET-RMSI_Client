@@ -4,7 +4,7 @@
 #include "WiFiMulti.h"
 #include "string.h"
 
-void(* resetFunc) (void) = 0;
+void(* resetclient) (void) = 0;
 
 TCPClientConfig tcpcliconf;
 WifiConfig wc;
@@ -60,7 +60,7 @@ void tcpclientinit()
     Serial.println("\nCurrent controller version: " + tcpcliconf.controlledcli);
     Serial.print("client-server versioning mismatch please update, ensure server and client are on the same version");
     tcpclient.stop();
-    resetFunc();
+    resetclient();
   }
 
 
