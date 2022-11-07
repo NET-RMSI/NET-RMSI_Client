@@ -4,6 +4,8 @@
 #include "WiFiMulti.h"
 #include "string.h"
 
+void(* resetFunc) (void) = 0;
+
 TCPClientConfig tcpcliconf;
 WifiConfig wc;
 
@@ -11,7 +13,7 @@ WiFiClient tcpclient;
 
 void wifiinit()
 {
-  
+
   WiFi.mode(WIFI_STA);
   WiFi.begin(wc.SSID, wc.WifiPassword);
 
@@ -22,9 +24,9 @@ void wifiinit()
     Serial.print(".");
     delay(1000);
   }
-  
-    Serial.print("\nConnected to network");
-    Serial.print("\nSSID: " + WiFi.SSID() + "\n Device IP: " + WiFi.localIP());
+
+  Serial.print("\nConnected to network");
+  Serial.print("\nSSID: " + WiFi.SSID() + "\nDevice IP: " + WiFi.localIP());
 }
 
 void tcpclientinit()
@@ -41,72 +43,65 @@ void tcpclientinit()
     delay(5000);
 
   }
-    Serial.print("\nConnected to TCPServer");
-    serverclientidentif();
-
-    
-}
-
-void serverclientidentif()
-{
+  Serial.print("\nConnected to TCPServer");
 
   tcpclient.println(tcpcliconf.controlledcli);
 
-    String recvidentif = tcpclient.readString();
+  String recvidentif = tcpclient.readString();
 
-    if (recvidentif == "valid")
-    {
-      Serial.print("\nClient-Server versioning the same");
-      loop();
-    }
-    else if (recvidentif == "invalid")
-    {
-      Serial.print("\nDisconnecting from server");
-      Serial.println("\nCurrent controller version: " + tcpcliconf.controlledcli);
-      Serial.print("client-server versioning mismatch please update, ensure server and client are on the same version");
-      tcpclient.stop();
+  if (recvidentif == "valid")
+  {
+    Serial.print("\nClient-Server versioning the same");
 
-      tcpclientinit();
+  }
+  else if (recvidentif == "invalid")
+  {
+    Serial.print("\nDisconnecting from server");
+    Serial.println("\nCurrent controller version: " + tcpcliconf.controlledcli);
+    Serial.print("client-server versioning mismatch please update, ensure server and client are on the same version");
+    tcpclient.stop();
+    resetFunc();
+  }
 
-    }
+
 }
-
 
 void setup()
 {
-  
+
   Serial.begin(115200);
   delay(10000);
   wifiinit();
   tcpclientinit();
 
+
 }
 
 void loop()
 {
-
-  if (tcpclient.connected())
+  int recv = NULL;
+  while (recv == NULL)
   {
+    recv = tcpclient.read();
+  }
 
-    int recv = tcpclient.read();
-    if (recv == 0)
-    {
-      /* Relay control code here */
-    }
-    else if (recv == 1)
-    {
-      /* Relay control code here */
-    }
+  if (recv == 0)
+  {
+    /* Relay control code here */
+  }
+  else if (recv == 1)
+  {
+    /* Relay control code here */
+  }
 
+  else
+  {
     Serial.println("\nInvalid response from server recieved: " + recv);
-    tcpclient.print("null");
-
-  }
-  else if (!tcpclient.connected())
-  {
+    Serial.print("\nDisconnecting from server");
     tcpclient.stop();
-    tcpclientinit();
-
+    resetFunc();
   }
-  
+
+
+
 }
