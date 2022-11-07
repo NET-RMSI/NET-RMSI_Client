@@ -21,16 +21,10 @@ void wifiinit()
   {
     Serial.print(".");
     delay(1000);
-    
   }
   
     Serial.print("\nConnected to network");
-    Serial.print("\nConnection details:");
-    Serial.print("\nSSID:");
-    Serial.println(WiFi.SSID());
-    Serial.print("\nDevice IP Address:");
-    Serial.println(WiFi.localIP());
-  
+    Serial.print("\nSSID: " + WiFi.SSID() + "\n Device IP: " + WiFi.localIP());
 }
 
 void tcpclientinit()
