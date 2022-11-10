@@ -12,7 +12,9 @@ Branch layout is as follows:
 * [dev](https://github.com/NET-RMSI/NET-RMSI_Client/tree/dev/) - Development branch, features are added often in stages and are not always fully functional as they get worked on, therefore making dev unsuitable for production.
 * [stable](https://github.com/NET-RMSI/NET-RMSI_Client/tree/stable/) - Current stable version of the software.
 * [bleeding-edge](https://github.com/NET-RMSI/NET-RMSI_Client/tree/bleeding-edge/) - Newest features with full functionality but may contain bugs.
-* version-x.x.x - Legacy versions and codebases.
+* [rewrite](https://github.com/NET-RMSI/NET-RMSI_Client/tree/rewrite) - Test branch, written with lower level features.
+
+* [version-1.0.0](https://github.com/NET-RMSI/NET-RMSI_Client/tree/version-1.0.0) - Legacy versions and codebases.
 
 ***
 Development progress and roadmap can be found [here](https://github.com/orgs/NET-RMSI/projects/3)
