@@ -47,22 +47,11 @@ void tcpclientinit()
   while (true)
   {
    
-    String recvidentif;
+   
+    tcpclient.println(tcpcliconf.controlledcli);
 
-    try
-    {
-      tcpclient.println(tcpcliconf.controlledcli);
-
-       recvidentif = tcpclient.readString();
+    String recvidentif = tcpclient.readString();
        
-       throw(recvidentif);
-    }
-    
-    catch(String recieveddata)
-    {
-      Serial.println("\nRecieved from server: " + recieveddata);
-      resetclient();
-    }
     
   if (recvidentif == "valid")
   {
