@@ -44,13 +44,26 @@ void tcpclientinit()
 
   }
   Serial.print("\nConnected to TCPServer");
-
   while (true)
   {
-    tcpclient.println(tcpcliconf.controlledcli);
+   
+    String recvidentif;
 
-    String recvidentif = tcpclient.readString();
+    try
+    {
+      tcpclient.println(tcpcliconf.controlledcli);
 
+       recvidentif = tcpclient.readString();
+       
+       throw(recvidentif);
+    }
+    
+    catch(String recieveddata)
+    {
+      Serial.println("\nRecieved from server: " + recieveddata);
+      resetclient();
+    }
+    
   if (recvidentif == "valid")
   {
     Serial.print("\nClient-Server versioning the same");
@@ -66,8 +79,6 @@ void tcpclientinit()
     resetclient();
   }
   }
-  
-
 }
 
 void setup()

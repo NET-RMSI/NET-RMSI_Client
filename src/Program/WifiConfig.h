@@ -1,6 +1,6 @@
 class WifiConfig
 {
   public:
-      const char *SSID = "VM2352248";
-      const char *WifiPassword = "5rdrzfLJvkk3";
+      const char *SSID = ""; /* Network SSID */
+      const char *WifiPassword = ""; /* Network Password */
 };
