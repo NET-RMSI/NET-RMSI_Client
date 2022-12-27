@@ -83,13 +83,15 @@ void setup()
 
 void loop()
 {
-  int recv = tcpclient.read();
+  String recv = tcpclient.readString();
+  Serial.println("Recieved: " + recv);
 
-  if (recv == 0)
+
+  if (recv == "0")
   {
     /* Relay control code here */
   }
-  else if (recv == 1)
+  else if (recv == "1")
   {
     /* Relay control code here */
   }
